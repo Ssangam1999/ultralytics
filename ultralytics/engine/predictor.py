@@ -377,7 +377,7 @@ class BasePredictor:
         else:
             cv2.imwrite(save_path, im)
 
-    def show(self, p=""):
+    def show(self, p="image"):
         """Display an image in a window using OpenCV imshow()."""
         im = self.plotted_img
         if platform.system() == "Linux" and p not in self.windows:
@@ -385,7 +385,7 @@ class BasePredictor:
             cv2.namedWindow(p, cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
             cv2.resizeWindow(p, im.shape[1], im.shape[0])  # (width, height)
         cv2.imshow(p, im)
-        cv2.waitKey(300 if self.dataset.mode == "image" else 1)  # 1 millisecond
+        cv2.waitKey(0 if self.dataset.mode == "image" else 1)  # 1 millisecond
 
     def run_callbacks(self, event: str):
         """Runs all registered callbacks for a specific event."""
@@ -395,3 +395,12 @@ class BasePredictor:
     def add_callback(self, event: str, func):
         """Add callback."""
         self.callbacks[event].append(func)
+
+ # if view_img:
+ #                            if platform.system() == 'Linux' and p not in windows:
+ #                                windows.append(p)
+ #                                cv2.namedWindow(str(p),
+ #                                                cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
+ #                                cv2.resizeWindow(str(p), im0.shape[1], im0.shape[0])
+ #                            cv2.imshow(str(p), im0)
+ #                            cv2.waitKey(0)  # 1 millisecond

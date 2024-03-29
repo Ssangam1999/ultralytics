@@ -3,6 +3,9 @@
 from ultralytics.engine.predictor import BasePredictor
 from ultralytics.engine.results import Results
 from ultralytics.utils import ops
+import cv2
+
+
 
 
 class DetectionPredictor(BasePredictor):
@@ -41,3 +44,11 @@ class DetectionPredictor(BasePredictor):
             img_path = self.batch[0][i]
             results.append(Results(orig_img, path=img_path, names=self.model.names, boxes=pred))
         return results
+
+
+if __name__ =="__main__":
+    # args = dict(model='yolov8n.pt', source='rtsp://admin:nepal@123@192.168.1.64')
+    args = dict(model='yolov8n.pt', source='/home/sangam/Downloads/MicrosoftTeams-video.mp4')
+    predictor = DetectionPredictor(overrides=args)
+    predictor.predict_cli()
+    predictor.show()
