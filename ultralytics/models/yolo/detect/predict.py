@@ -6,8 +6,6 @@ from ultralytics.utils import ops
 import cv2
 
 
-
-
 class DetectionPredictor(BasePredictor):
     """
     A class extending the BasePredictor class for prediction based on a detection model.
@@ -43,12 +41,19 @@ class DetectionPredictor(BasePredictor):
             pred[:, :4] = ops.scale_boxes(img.shape[2:], pred[:, :4], orig_img.shape)
             img_path = self.batch[0][i]
             results.append(Results(orig_img, path=img_path, names=self.model.names, boxes=pred))
+            annotated_frame = results[0].plot()
+            cv2.namedWindow("YOLOv8 Inference", cv2.WINDOW_NORMAL)
+            cv2.imshow("YOLOv8 Inference", annotated_frame)
+            if cv2.waitKey(1) & 0xFF == ord(''):
+                break
         return results
 
 
-if __name__ =="__main__":
+if __name__ == "__main__":
     # args = dict(model='yolov8n.pt', source='rtsp://admin:nepal@123@192.168.1.64')
-    args = dict(model='yolov8n.pt', source='/home/sangam/Downloads/MicrosoftTeams-video.mp4')
+    args = dict(model='yolov8n.pt', source='0')
+    # args = dict(model='yolov8n.pt', source='/home/sangam/Downloads/MicrosoftTeams-video.mp4')
+    # args = dict(model='yolov8n.pt', source='/home/sangam/Downloads/input.jpg')
     predictor = DetectionPredictor(overrides=args)
     predictor.predict_cli()
-    predictor.show()
+    # predictor.show()
