@@ -1,5 +1,5 @@
 # Ultralytics YOLO 🚀, AGPL-3.0 license
-
+import cv2
 from ultralytics.engine.results import Results
 from ultralytics.models.yolo.detect.predict import DetectionPredictor
 from ultralytics.utils import DEFAULT_CFG, ops
@@ -54,6 +54,11 @@ class SegmentationPredictor(DetectionPredictor):
                 masks = ops.process_mask(proto[i], pred[:, 6:], pred[:, :4], img.shape[2:], upsample=True)  # HWC
                 pred[:, :4] = ops.scale_boxes(img.shape[2:], pred[:, :4], orig_img.shape)
             results.append(Results(orig_img, path=img_path, names=self.model.names, boxes=pred[:, :6], masks=masks))
+            annotated_frame = results[0].plot()
+            cv2.namedWindow("YOLOv8 Inference",cv2.WINDOW_NORMAL)
+            cv2.imshow("YOLOv8 Inference", annotated_frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
         return results
 
 
