@@ -66,9 +66,9 @@ embed: # (list[int], optional) return feature vectors/embeddings from given laye
 
 # Visualize settings ---------------------------------------------------------------------------------------------------
 show: False # (bool) show predicted images and videos if environment allows
-save_frames: False # (bool) save predicted individual video frames
+save_frames: True # (bool) save predicted individual video frames
 save_txt: False # (bool) save results as .txt file
-save_conf: False # (bool) save results with confidence scores
+save_conf: True # (bool) save results with confidence scores
 save_crop: False # (bool) save cropped images with results
 show_labels: True # (bool) show prediction labels, i.e. 'person'
 show_conf: True # (bool) show prediction confidence, i.e. '0.99'

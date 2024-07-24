@@ -207,7 +207,7 @@ class BasePredictor:
 
     @smart_inference_mode()
     def stream_inference(self, source=None, model=None, *args, **kwargs):
-        """Streams real-time inference on camera feed and saves results to file."""
+        # """Streams real-time inference on camera feed and saves results to file."""
         if self.args.verbose:
             LOGGER.info("")
 
@@ -292,7 +292,7 @@ class BasePredictor:
             LOGGER.info(f"Results saved to {colorstr('bold', self.save_dir)}{s}")
         self.run_callbacks("on_predict_end")
 
-    def setup_model(self, model, verbose=True):
+    def setup_model(self, model, verbose=False):
         """Initialize YOLO model with given parameters and set it to evaluation mode."""
         self.model = AutoBackend(
             weights=model or self.args.model,
@@ -395,12 +395,3 @@ class BasePredictor:
     def add_callback(self, event: str, func):
         """Add callback."""
         self.callbacks[event].append(func)
-
- # if view_img:
- #                            if platform.system() == 'Linux' and p not in windows:
- #                                windows.append(p)
- #                                cv2.namedWindow(str(p),
- #                                                cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
- #                                cv2.resizeWindow(str(p), im0.shape[1], im0.shape[0])
- #                            cv2.imshow(str(p), im0)
- #                            cv2.waitKey(0)  # 1 millisecond
